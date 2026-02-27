@@ -1,28 +1,21 @@
-import { Route, Routes } from "react-router-dom";
-import { lazy } from "react";
-import { routes } from "./helpers/routes";
-import SharedLayout from "./components/SharedLayout";
-import PrivateRoute from "./components/PrivateRoute";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Courses from "./pages/Courses";
+import Lessons from "./pages/Lessons";
+import Quiz from "./pages/Quiz";
+import "./App.css";
 
-const HomePage = lazy(() => import("./pages/HomePage"));
-const TeachersPage = lazy(() => import("./pages/TeachersPage"));
-const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
-
-const App = () => {
+function App() {
   return (
-    <Routes>
-      <Route path={routes.HOME} element={<SharedLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path={routes.TEACHERS} element={<TeachersPage />} />
-        <Route
-          path={routes.FAVORITES}
-          element={<PrivateRoute comp={<TeachersPage onlyFavorites={true} />} />}
-        />
-
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/lessons/:courseId" element={<Lessons />} />
+        <Route path="/quiz/:lessonId" element={<Quiz />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;
