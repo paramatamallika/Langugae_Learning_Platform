@@ -1,13 +1,12 @@
-const mongoose = require("mongoose");
+router.get("/:courseId", async (req, res) => {
+  const { courseId } = req.params;
 
-const lessonSchema = new mongoose.Schema({
-  courseId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Course",
-    required: true
-  },
-  title: String,
-  description: String
+  const { data, error } = await supabase
+    .from("lessons")
+    .select("*")
+    .eq("course_id", courseId);
+
+  if (error) return res.status(500).json(error);
+
+  res.json(data);
 });
-
-module.exports = mongoose.model("Lesson", lessonSchema);
