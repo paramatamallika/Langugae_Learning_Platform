@@ -1,26 +1,42 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import API from "../api";
+import "../index.css";
 
-export default function Courses() {
+function Courses() {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    API.get("/courses").then(res => setCourses(res.data));
+    axios.get("https://your-backend-url.onrender.com/courses")
+      .then(res => setCourses(res.data))
+      .catch(err => console.log(err));
   }, []);
 
   return (
-    <div>
-      <h2>Courses</h2>
-      {courses.map(course => (
-        <div key={course.id}>
-          <h3>{course.title}</h3>
-          <button onClick={() => navigate(`/lessons/${course.id}`)}>
-            View Lessons
-          </button>
-        </div>
-      ))}
+    <div className="courses">
+      <h2 style={{ marginBottom: "30px" }}>Courses</h2>
+
+      <div className="cards">
+        {courses.map(course => (
+          <div className="card" key={course.id}>
+            <img
+              src="https://images.unsplash.com/photo-1519681393784-d120267933ba"
+              alt="course"
+            />
+            <h3>{course.title}</h3>
+            <p>{course.description}</p>
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate(`/lessons/${course.id}`)}
+            >
+              View Lessons
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
+
+export default Courses;

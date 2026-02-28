@@ -1,38 +1,55 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import API from "../api";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "../index.css";
 
-export default function Quiz() {
+function Quiz() {
   const { lessonId } = useParams();
-  const [questions, setQuestions] = useState([]);
+  const [quiz, setQuiz] = useState(null);
   const [score, setScore] = useState(0);
+  const [answered, setAnswered] = useState(false);
 
   useEffect(() => {
-    API.get(`/quiz/${lessonId}`).then(res =>
-      setQuestions(res.data)
-    );
+    axios
+      .get(`https://your-backend-url.onrender.com/quiz/${lessonId}`)
+      .then((res) => setQuiz(res.data))
+      .catch((err) => console.log(err));
   }, [lessonId]);
 
-  const checkAnswer = (q, answer) => {
-    if (answer === q.correct_answer) {
-      setScore(score + 1);
+  if (!quiz) return <div className="container">Loading...</div>;
+
+  const handleAnswer = (option) => {
+    if (!answered) {
+      if (option === quiz.answer) {
+        setScore(score + 1);
+      }
+      setAnswered(true);
     }
   };
 
   return (
-    <div>
-      <h2>Quiz</h2>
-      <h3>Score: {score}</h3>
-      {questions.map(q => (
-        <div key={q.id}>
-          <p>{q.question}</p>
-          {[q.option1, q.option2, q.option3, q.option4].map((opt, i) => (
-            <button key={i} onClick={() => checkAnswer(q, opt)}>
-              {opt}
-            </button>
-          ))}
-        </div>
-      ))}
+    <div className="container" style={{ maxWidth: "700px", margin: "auto" }}>
+      <div className="card" style={{ textAlign: "center" }}>
+        <h2 style={{ marginBottom: "15px" }}>Quiz</h2>
+        <p style={{ marginBottom: "10px", fontWeight: "500" }}>
+          Score: {score}
+        </p>
+
+        <h3 style={{ marginBottom: "20px" }}>{quiz.question}</h3>
+
+        {quiz.options.map((option, index) => (
+          <button
+            key={index}
+            className="btn btn-primary"
+            style={{ display: "block", width: "100%", margin: "10px 0" }}
+            onClick={() => handleAnswer(option)}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
+
+export default Quiz;
