@@ -8,7 +8,7 @@ router.get("/:lessonId", async (req, res) => {
   const { lessonId } = req.params;
 
   const { data, error } = await supabase
-    .from("quizzes")
+    .from("quiz")
     .select("*")
     .eq("lesson_id", lessonId);
 
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
   const { lesson_id, question, options, answer } = req.body;
 
   const { data, error } = await supabase
-    .from("quizzes")
+    .from("quiz")
     .insert([{ lesson_id, question, options, answer }])
     .select();
 
