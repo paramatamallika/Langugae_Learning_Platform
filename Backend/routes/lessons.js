@@ -3,35 +3,29 @@ import { supabase } from "../supabaseClient.js";
 
 const router = express.Router();
 
-// GET lessons by course
+// GET lessons by course UUID
 router.get("/:courseId", async (req, res) => {
-  const { courseId } = req.params;
+  try {
+    const { courseId } = req.params;
 
-  const { data, error } = await supabase
-    .from("lessons")
-    .select("*")
-    .eq("course_id", courseId);
+    const { data, error } = await supabase
+      .from("lessons")
+      .select("*")
+      .eq("course_id", courseId); // UUID (string)
 
-  if (error) return res.status(500).json(error);
+    if (error) {
+      console.error(error);
+      return res.status(500).json(error);
+    }
 
-  res.json(data);
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
-// POST lesson
-router.post("/", async (req, res) => {
-  const { course_id, title, description } = req.body;
-
-  const { data, error } = await supabase
-    .from("lessons")
-    .insert([{ course_id, title, description }])
-    .select();
-
-  if (error) return res.status(500).json(error);
-
-  res.json(data);
-});
-
-// ✅ UPDATE VIDEO URL (NEW 🔥)
+// UPDATE video URL
 router.put("/video/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -40,18 +34,19 @@ router.put("/video/:id", async (req, res) => {
     const { data, error } = await supabase
       .from("lessons")
       .update({ video_url })
-      .eq("id", id);
+      .eq("id", id)
+      .select();
 
     if (error) throw error;
 
     res.json({
       success: true,
-      message: "Video URL updated successfully",
+      message: "Video updated",
       data
     });
 
-  } catch (error) {
-    res.status(500).json(error);
+  } catch (err) {
+    res.status(500).json({ error: "Update failed" });
   }
 });
 
