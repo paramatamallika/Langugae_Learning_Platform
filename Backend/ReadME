@@ -1,0 +1,144 @@
+📦 Backend README
+Language Learning Platform – Backend
+
+This is the backend API for the Language Learning Platform.
+It handles courses, lessons, quizzes, flashcards, authentication, and streak tracking using Node.js, Express, and Supabase.
+
+🚀 Tech Stack
+
+Node.js
+
+Express.js
+
+Supabase (Database)
+
+CORS
+
+REST API
+
+📂 Project Structure
+Backend
+│
+├── routes
+│   ├── auth.js
+│   ├── courses.js
+│   ├── lessons.js
+│   ├── quiz.js
+│   ├── flashcardRoutes.js
+│   └── streakRoutes.js
+│
+├── supabaseClient.js
+├── server.js
+├── package.json
+└── .env
+⚙️ Installation
+
+1️⃣ Clone the repository
+
+git clone https://github.com/your-repo/language-learning-platform.git
+
+2️⃣ Go to backend folder
+
+cd Backend
+
+3️⃣ Install dependencies
+
+npm install
+🔑 Environment Variables
+
+Create a .env file.
+
+Example:
+
+SUPABASE_URL=your_supabase_url
+SUPABASE_KEY=your_supabase_key
+PORT=5000
+▶️ Run the Server
+node server.js
+
+Server runs on:
+
+http://localhost:5000
+📡 API Endpoints
+Authentication
+POST /api/auth/signup
+POST /api/auth/login
+Courses
+GET /courses
+
+Fetch all language courses.
+
+Lessons
+GET /lessons/:courseId
+
+Fetch lessons for a course.
+
+Quiz
+GET /quiz/:lessonId
+POST /quiz
+
+Fetch quiz questions or create quiz.
+
+Flashcards
+GET /api/flashcards/random
+
+Fetch random flashcards.
+
+🔥 Streak System
+
+Tracks user learning streak.
+
+Get streak
+GET /streaks/:userId
+
+Example:
+
+https://your-backend-url/streaks/1
+Update streak (after quiz)
+POST /streaks/update
+
+Body:
+
+{
+  "userId": 1
+}
+
+This increases the streak when the user completes a quiz.
+
+🗄 Database (Supabase)
+
+Tables used:
+
+users
+
+courses
+
+lessons
+
+quiz
+
+flashcards
+
+streaks
+
+Example streak table:
+
+id
+user_id
+current_streak
+last_login
+🧠 How Streak Works
+
+User completes a quiz
+
+Frontend calls
+
+POST /streaks/update
+
+Backend checks:
+
+If user has no streak → create streak
+
+If last login is not today → increase streak
+
+If already updated today → no change
