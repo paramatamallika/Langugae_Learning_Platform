@@ -1,0 +1,120 @@
+Frontend README
+Language Learning Platform – Frontend
+
+This is the frontend of the Language Learning Platform built using React + Vite.
+
+Users can:
+
+Sign up / Login
+
+Learn courses
+
+Take quizzes
+
+Practice flashcards
+
+Track learning streaks
+
+🚀 Tech Stack
+
+React
+
+Vite
+
+React Router
+
+Axios
+
+CSS
+
+📂 Project Structure
+frontend
+│
+├── src
+│   ├── components
+│   │   ├── Navbar.jsx
+│   │   └── ProtectedRoute.jsx
+│   │
+│   ├── pages
+│   │   ├── Home.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── Courses.jsx
+│   │   ├── Lessons.jsx
+│   │   ├── Quiz.jsx
+│   │   ├── Flashcards.jsx
+│   │   ├── Login.jsx
+│   │   └── Signup.jsx
+│   │
+│   ├── api.js
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+⚙️ Installation
+
+1️⃣ Go to frontend folder
+
+cd frontend
+
+2️⃣ Install dependencies
+
+npm install
+▶️ Run the Project
+npm run dev
+
+Runs on:
+
+http://localhost:5173
+🌐 Backend API URL
+
+Example:
+
+https://langugae-learning-platform-1.onrender.com
+
+Example request:
+
+GET /courses
+GET /quiz/1
+GET /api/flashcards/random
+GET /streaks/1
+📊 Features
+👤 Authentication
+
+Users can sign up and login.
+
+📚 Courses
+
+Users can view available language courses.
+
+📖 Lessons
+
+Each course contains lessons.
+
+❓ Quiz
+
+Users can answer quiz questions to test their knowledge.
+
+🧠 Flashcards
+
+Quick practice questions.
+
+🔥 Streak System
+
+Users maintain a learning streak by completing quizzes.
+
+Example:
+
+Day 1 → Quiz completed → streak = 1
+Day 2 → Quiz completed → streak = 2
+🧑‍💻 Deployment
+
+Frontend deployed on:
+
+Netlify / Vercel
+
+Backend deployed on:
+
+Render
+
+Database:
+
+Supabase
