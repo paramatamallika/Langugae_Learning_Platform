@@ -1,5 +1,5 @@
 import express from "express";
-import { supabase } from "../supabaseClient.js";
+import supabase from "../supabaseClient.js";
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.get("/:lessonId", async (req, res) => {
   res.json(data);
 });
 
-// 🔥 ADD THIS
+//  ADD THIS
 router.post("/", async (req, res) => {
   const { lesson_id, question, options, answer } = req.body;
 
